@@ -15,19 +15,20 @@ The simulation parameters are chosen to mirror the paper's experiments: the unde
 ## Repository structure
 
 ```
-everlasting_options/
+everlasting-options-simulation/
 ├── README.md               ← high‑level overview and reproduction instructions
 ├── requirements.txt        ← Python dependencies
-├── src/                    ← source code implementing the simulation
-│   ├── __init__.py
-│   ├── gbm.py              ← Geometric Brownian Motion path generation
-│   ├── options.py          ← Black–Scholes pricing, deltas and everlasting option approximation
-│   ├── market_maker.py     ← Dynamic Proactive Market Maker and AMM abstractions
-│   ├── hedging.py          ← Delta hedging logic for liquidity providers
-│   ├── simulation.py       ← Driver for running simulations and producing figures
-│   └── ammdpmm_compare.py  ← Example comparison between AMM and DPMM models
-└── examples/
-    └── run_simulation.py   ← Sample script demonstrating the simulation API
+├── everlasting_options/    ← main package
+│   ├── src/                ← source code implementing the simulation
+│   │   ├── __init__.py
+│   │   ├── gbm.py          ← Geometric Brownian Motion path generation
+│   │   ├── options.py      ← Black–Scholes pricing, deltas and everlasting option approximation
+│   │   ├── market_maker.py ← Dynamic Proactive Market Maker and AMM abstractions
+│   │   ├── hedging.py      ← Delta hedging logic for liquidity providers
+│   │   ├── simulation.py   ← Driver for running simulations and producing figures
+│   │   └── ammdpmm_compare.py ← Example comparison between AMM and DPMM models
+│   └── examples/
+│       └── run_simulation.py ← Sample script demonstrating the simulation API
 ```
 
 ## Installation
@@ -36,7 +37,7 @@ Assuming you have Python 3.10+ installed, create a virtual environment and insta
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
@@ -45,10 +46,31 @@ pip install -r requirements.txt
 You can reproduce the figures from the paper by running the provided example script.  For example, to simulate a funding fee time‑series and a final PnL distribution under a DPMM with moderate liquidity and a hedging ratio of 0.5:
 
 ```bash
-python examples/run_simulation.py --liquidity 10000 --strike 3200 --hedge 0.5 --n-paths 100
+python everlasting_options/examples/run_simulation.py --liquidity 10000 --strike 3200 --hedge 0.5 --n-paths 100
 ```
 
 This will generate plots saved to the `outputs/` folder and print summary statistics.  See `--help` for all available options.
+
+## Quick Start
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/hardhik-99/everlasting-options-simulation.git
+   cd everlasting-options-simulation
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Run a simulation**:
+   ```bash
+   python everlasting_options/examples/run_simulation.py
+   ```
+
+4. **View results**:
+   The simulation will output summary statistics including mean PnL, median PnL, standard deviation, and the fraction of positive PnL paths.
 
 ## Extending the framework
 
